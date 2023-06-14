@@ -1,0 +1,22 @@
+<%- include("partials/header")  %>
+
+<div class="my-class">
+	<div class="form">
+		<h1>Login</h1>
+		<form action="/login" method="POST">
+			<div class="form-group mb-2">
+				<input class="form-control" type="text" name="username" placeholder="username" required>
+			</div>
+			<div class="form-group mb-2">
+				 <input class="form-control" type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$" placeholder="password" required>
+			</div>
+			<p style="text-align: right;"><a href="/forgot">Forgot Password?</a></p>
+			<div class="form-group mb-2">
+                <button class="btn btn-lg btn-primary btn-block">Sign In</button>
+            </div>
+		</form>
+		<p>Not registered? <a href="/register">Create an account</a></p>
+	</div>
+</div>
+
+<%- include("partials/footer")  %>

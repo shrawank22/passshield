@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="description" content="PassShield - Password Manager Web Application">
+	<meta name="keywords" content="shrawank22, shrawan.iitk, shrawan07, passshield, password manager, PassShield, secure passwords, shrawan">
+	<title>PassShield | Password Manager Application</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="container">
+					<a class="navbar-brand" href="/">
+						PassShield
+					<!-- <img src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=40&q=60" style="border-radius: 40px;" alt="logo"> -->
+					</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav me-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="/contents/new">Add Passwords</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">dummy button</a>
+							</li>
+						</ul>
+						<ul class="navbar-nav ms-auto">
+
+							<% if(!user){ %>
+								<li class="nav-item">
+									<a class="nav-link" href="/login">Login</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/register">Signup</a>
+								</li>
+							<% } else { %>
+								<li class="nav-item">
+									<a class="nav-link" href="#blog"><em>Signed in As <%= user.username %></em></a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/logout">Logout</a>
+								</li>
+							<% } %>
+							
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div class="container mt-2">
+			<% if(error && error.length > 0){%>
+				<div class="alert alert-danger" role="alert">
+					<%= error %>
+				</div>
+			<%}%>
+			
+			<% if(success && success.length > 0){%>
+				<div class="alert alert-success" role="alert">
+					<%= success %>
+				</div>
+			<%}%>
+		</div>

@@ -1,0 +1,29 @@
+<%- include("partials/header")  %>
+
+  <h1 class="text-center">Your Credentials</h1>
+  <div class="container content1">
+    <div class="row">
+      <% for(content of contents) { %>
+      <div class="col-lg-4 col-md-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Website: <%= content.website %></h5>
+            <p class="card-text">Username: <%= content.username %></p>
+            <p class="card-text">Password: <%= content.password %></p>
+            <div class="justify-content-between">
+                <a href="/contents/<%= content._id %>/edit" class="btn btn-primary">Edit</a>
+                <form style="display: inline;" action="/contents/<%= content._id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%}%>
+    </div>
+  </div>
+
+<%- include("partials/footer")  %>
+
+
+

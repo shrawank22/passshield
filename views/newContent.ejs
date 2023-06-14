@@ -1,0 +1,27 @@
+<%- include("partials/header")  %>
+
+<div class="my-class">
+	<div class="form">
+		<h2>Add Details</h2>
+		<form action="/contents" method="POST">
+			<div class="form-group mb-2">
+				<input class="form-control" type="text" name="content[website]" placeholder="name of app/website" required>
+			</div>
+			<div class="form-group mb-2">
+				<input class="form-control" type="text" name="content[username]" placeholder="username" required>
+			</div>
+			<div class="form-group mb-2">
+				<input class="form-control" type="password" id="password" name="content[password]" placeholder="password " required>
+			</div>
+			<div class="form-group mb-2">
+				<input class="form-control" type="password" id="confirm_password" name="content[confirm_password]" placeholder="confirm password " required onkeyup="validatePassword();">
+				<span id="password_error" style="color: red;"></span>
+			</div>
+			<div class="form-group mb-2">
+                <button class="btn btn-lg btn-primary btn-block">Add</button>
+            </div>
+		</form>
+	</div>
+</div>
+
+<%- include("partials/footer")  %>

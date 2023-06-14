@@ -1,0 +1,38 @@
+<%- include("partials/header")  %>
+
+<div class="my-class">
+	<div class="form">
+		<h1>Sign Up</h1>
+		<form action="/register" method="POST">
+			<div class="form-group mb-2">
+				<input class="form-control" type="text" name="name" placeholder="name" required>
+			</div>
+			<div class="form-group mb-2">
+				<input class="form-control" type="email" name="email" placeholder="email" required>
+			</div>
+			<div class="form-group mb-2">
+				<input class="form-control" type="text" name="username" placeholder="username" required>
+			</div>
+			<div class="form-group mb-2">
+				<input class="form-control" type="password" name="privateKey" placeholder="key(min 32 chars, include small, cap, special, num)" required 
+				pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{32,}$">
+			</div>
+			<div class="form-group mb-2"> 
+				<input class="form-control" type="password" id="password" name="password" 
+				pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$" placeholder="password (min 8 char, same pattern as above)" required>
+			</div>
+			<div class="form-group mb-2">
+				<input class="form-control" type="password" id="confirm_password" name="confirm_password" 
+				placeholder="confirm password" required onkeyup="validatePassword();">
+				<span id="password_error" style="color: red;"></span>
+			</div>
+			
+			<div class="form-group mb-2">
+                <button class="btn btn-lg btn-primary btn-block">Sign Up</button>
+            </div>
+		</form>
+		<p class="message">Already registered? <a href="/login">Sign In</a></p>
+	</div>
+</div>
+
+<%- include("partials/footer")  %>

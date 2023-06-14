@@ -1,0 +1,40 @@
+{
+  "name": "password-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js"
+  },
+  "keywords": [
+    "shrawank22"
+  ],
+  "author": "shrawank22",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.4",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.1.4",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-sanitizer": "^1.0.6",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.0",
+    "method-override": "^3.0.0",
+    "moment": "^2.29.4",
+    "mongoose": "^7.2.3",
+    "nodemailer": "^6.9.3",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^8.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
