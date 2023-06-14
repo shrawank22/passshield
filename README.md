@@ -12,7 +12,7 @@ PassShield is a secure password manager application that helps you store and man
 
 ## Technologies Used
 
-- Front-end: HTML, CSS, Bootstrap, JavaScript
+- Front-end: HTML/EJS, CSS, Bootstrap, JavaScript
 - Back-end: Node.js, Express.js
 - Database: MongoDB
 - Authentication: Passport.js
