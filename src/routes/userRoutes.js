@@ -2,17 +2,22 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');	
 const passport = require('passport');
+const CryptoJS = require('crypto-js');
+
+const middleware = require('../../middleware');
 
 router.get('/register', (req, res)=>{
 	res.render('register');
 });
 
-router.post('/register', (req, res)=>{
+router.post('/register', (req, res) => {
+	var iv = CryptoJS.lib.WordArray.random(32).toString();
 	User.register(new User({
         username: req.body.username,
         name: req.body.name, 
         email: req.body.email, 
-		privateKey: req.body.privateKey
+		privateKey: CryptoJS.AES.encrypt(req.body.privateKey, req.body.privateKey, {iv: iv}).toString(),
+		iv: iv
     }), req.body.password, (err, user) => {
 		if(err){
             console.log(err);
@@ -48,6 +53,7 @@ router.get('/logout', (req, res)=>{
         } else {
             req.flash("success", "Successfully Logged you out");
             res.redirect('/login');
+			req.session.validKey = false;
         }
     });
 });

@@ -1,0 +1,16 @@
+<%- include("partials/header")  %>
+  <div class="my-class">
+    <div class="form">
+      <h2>Enter same key used while registration</h2>
+      <form method="POST" action="/validate-key">
+        <div class="form-group mb-1">
+          <input class="form-control" type="password" name="key" placeholder="Enter key" required>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<%- include("partials/footer")  %>

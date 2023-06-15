@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 const Content = require('../models/Content');
 const CryptoJS = require('crypto-js');
-const crypto = require('crypto');
 
 const middleware = require('../../middleware');
 
@@ -15,11 +14,12 @@ router.get('/', (req, res) => {
 
 // ======================Content_Routes====================================
 // Get Route
-router.get('/contents', middleware.isLoggedIn, async (req, res) => {
+router.get('/contents', middleware.promptForKey, middleware.isLoggedIn, async (req, res) => {
     try {
         const contents = await Content.find({'owner.username': req.user.username});
         // console.log(contents);
-        const encryptionKey = deriveKey(req.user.privateKey);
+        
+        const encryptionKey = req.session.expectedKey;
         // console.log(encryptionKey)
 
         const decryptedContents = contents.map(content => {
@@ -47,6 +47,7 @@ router.get('/contents', middleware.isLoggedIn, async (req, res) => {
         res.render('index', { contents: decryptedContents });
     } catch (err) {
         console.log(err);
+        req.session.validKey = false;
     }
 });
 
@@ -69,22 +70,23 @@ router.post('/contents', middleware.isLoggedIn, async (req, res) => {
 	// const content = {website: website, username: username, password: password, owner: owner};
 
     // AES Encryption key derivation
-    const encryptionKey = deriveKey(req.user.privateKey);
+    const encryptionKey = req.session.expectedKey;
 
     // AES Encryption
     var iv = CryptoJS.lib.WordArray.random(32).toString();
     const encryptedWebsite = CryptoJS.AES.encrypt(website, encryptionKey, {iv: iv}).toString();
-    // console.log(encryptedWebsite)
     const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey, {iv: iv}).toString();
     const encryptedPassword = CryptoJS.AES.encrypt(password, encryptionKey, {iv: iv}).toString();
 
     const content = {website: encryptedWebsite, username: encryptedUsername, password: encryptedPassword, iv: iv, owner: owner};
+    // console.log(content);
 
     await Content.create(content).then(() => {
         // console.log(newContent);
         res.redirect('/contents')
     }).catch((err) => {
         console.log(err);
+        req.session.validKey = false;
     });
 });
 
@@ -95,7 +97,7 @@ router.get("/contents/:id", (req, res)=>{
 
 //EDIT ROUTE
 router.get("/contents/:id/edit", middleware.checkCredentialOwnership, async(req, res)=>{
-    const encryptionKey = deriveKey(req.user.privateKey);
+    const encryptionKey = req.session.expectedKey;
 
     await Content.findById(req.params.id).then((content) => {
         // console.log(content);
@@ -129,7 +131,7 @@ router.put("/contents/:id", middleware.checkCredentialOwnership, async (req,res)
         const content = await Content.findById(req.params.id);
         // console.log(content);
         // console.log(req.body.content)
-        const encryptionKey = deriveKey(req.user.privateKey);
+        const encryptionKey = req.session.expectedKey;
 
         const iv = CryptoJS.lib.WordArray.random(32).toString();
 

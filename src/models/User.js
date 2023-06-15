@@ -12,6 +12,9 @@ var userSchema = new mongoose.Schema({
 	privateKey: {
         type: String,
         required: true
+    },
+    iv: {
+        type: String
     }
 });
 
