@@ -6,6 +6,31 @@ const CryptoJS = require('crypto-js');
 
 const middleware = require('../../middleware');
 
+router.post('/validate-key', middleware.isLoggedIn, async(req, res) => {
+    const enteredKey = req.body.key;
+    // console.log(enteredKey);
+
+    const expectedEncryptedKey = req.user.privateKey;
+
+    try {
+        const bytes = CryptoJS.AES.decrypt(expectedEncryptedKey, enteredKey, { iv: req.user.iv });
+        const expectedKey = bytes.toString(CryptoJS.enc.Utf8);
+
+        if (enteredKey === expectedKey) {
+            req.session.validKey = true;
+            req.session.expectedKey = expectedKey;
+            res.redirect('/contents');
+        } else {
+            req.flash('Invalid key. Please try again.');
+            res.render('keyPrompt');
+        }
+    } catch (error) {
+        req.flash(error);
+        console.log('Decryption error:', error);
+        return res.render('keyPrompt');
+    }
+});
+
 
 // Landing Page Route
 router.get('/', (req, res) => {
@@ -164,6 +189,7 @@ router.delete("/contents/:id", middleware.checkCredentialOwnership, (req, res)=>
     Content.findByIdAndRemove(req.params.id).then(() => {
         res.redirect('/contents');
     }).catch((err) => {
+        req.flash(err.message);
         console.log(err);
     })
 });
